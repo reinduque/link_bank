@@ -1,0 +1,131 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    
+    <record model="ir.ui.view" id="link_bank.list">
+      <field name="name">link_bank list</field>
+      <field name="model">link_bank.link</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="url"/>
+          <field name="username"/>
+        </tree>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="link_bank_link_form">
+      <field name="name">link_bank_link.form</field>
+      <field name="model">link_bank.link</field>
+      <field name="arch" type="xml">
+        <form string="Link">
+          <header>
+          </header>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="url"/>
+              <field name="username"/>
+              <field name="password"/>
+              <field name="category_id"/>
+              <field name="notes"/>
+              <field name="tag_ids" widget="many2many_tags"/>
+            </group>
+          </sheet>
+          <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="link_bank.action_window">
+      <field name="name">Link Bank</field>
+      <field name="res_model">link_bank.link</field>
+      <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record id="link_access_rule_global" model="ir.rule">
+    <field name="name">Only Author and followers</field>
+    <field name="model_id" ref="model_link_bank_link"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_unlink" eval="1" />
+    <field name="domain_force">['|',('create_uid','=',user.id),('message_follower_ids', 'in', [user.partner_id.id])]</field>
+  </record>
+
+
+     <record model="ir.ui.view" id="view_link_bank_kanban">
+            <field name="name">Link Bank Kanban</field>
+            <field name="model">link_bank.link</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div>
+                               
+                                <div t-attf-class="oe_kanban_content">
+                                    <!-- title -->
+                                     <a type="open"> 
+                                    <h3>Title:  <field name="name"/> </h3>
+                                    </a>
+                                    URL:
+                                    <field name="url" widget="url"/>
+
+                                    <br/>
+                                    Username:
+                                    <field name="username"/>
+                                    <br/>
+                                    <p>
+                                    <field name="notes"/>
+                                    </p>
+                                    <b><field name="category_id"/></b> <br/>
+                                    <field name="tag_ids" widget="many2many_tags"/>
+                                </div>
+
+                                
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+    
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="link_bank.action_server">
+      <field name="name">link_bank server</field>
+      <field name="model_id" ref="model_link_bank_link_bank"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    
+    <menuitem name="Link Bank" id="link_bank.menu_root" action="link_bank.action_window"/>
+    
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="link_bank.menu_1" parent="link_bank.menu_root"/>
+    <menuitem name="Menu 2" id="link_bank.menu_2" parent="link_bank.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="link_bank.menu_1_list" parent="link_bank.menu_1"
+              action="link_bank.action_window"/>
+    <menuitem name="Server to list" id="link_bank" parent="link_bank.menu_2"
+              action="link_bank.action_server"/>
+    -->
+  </data>
+</odoo>
