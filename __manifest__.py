@@ -3,10 +3,10 @@
     'name': "link_bank",
 
     'summary': """
-        Link Repository""",
+        Bookmark URLS and share them""",
 
     'description': """
-        OmniTechnical Link Repository
+        Bookmark URLS and share them
     """,
 
     'author': "Rein Duque",
@@ -23,7 +23,7 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
     ],
@@ -31,4 +31,6 @@
     'demo': [
         'demo/demo.xml',
     ],
+    'application': True,
+    'auto_install': True
 }
