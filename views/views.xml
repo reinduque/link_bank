@@ -113,7 +113,7 @@
 
     <!-- Top menu item -->
     
-    <menuitem name="Link Bank" id="link_bank.menu_root" action="link_bank.action_window"/>
+    <menuitem name="Link Bank" id="link_bank.menu_root" action="link_bank.action_window" web_icon="link_bank,static/description/icon.png"/>
     
     <!-- menu categories -->
     <!--
